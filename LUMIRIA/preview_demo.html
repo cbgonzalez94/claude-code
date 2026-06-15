@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LUMIRIA · Búsqueda de anterioridades marcarias · Ecuador</title>
+  <style>
+:root {
+  --tinta: #1a2238;
+  --tinta-suave: #5b6478;
+  --fondo: #f4f6fb;
+  --tarjeta: #ffffff;
+  --acento: #4f46e5;
+  --rojo: #e23b3b;
+  --rojo-bg: #fdeaea;
+  --amarillo: #d9a400;
+  --amarillo-bg: #fdf6e3;
+  --verde: #2faa5e;
+  --verde-bg: #e9f7ee;
+  --borde: #e4e8f2;
+  --radio: 14px;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--fondo); color: var(--tinta); }
+.oculto { display: none !important; }
+
+.topbar {
+  display: flex; align-items: baseline; gap: 14px;
+  padding: 16px 28px; background: var(--tinta); color: #fff;
+}
+.brand { font-weight: 800; letter-spacing: 3px; font-size: 20px; }
+.tagline { color: #b9c0d6; font-size: 13px; }
+
+main { max-width: 880px; margin: 0 auto; padding: 28px 20px 60px; }
+
+.hero { text-align: center; padding: 36px 0 18px; }
+.hero h1 { font-size: 30px; margin: 0 0 10px; }
+.hero .sub { color: var(--tinta-suave); max-width: 560px; margin: 0 auto 26px; line-height: 1.5; }
+
+.buscador { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+.buscador input {
+  flex: 1; min-width: 260px; max-width: 460px;
+  padding: 14px 16px; font-size: 16px;
+  border: 1px solid var(--borde); border-radius: var(--radio); background: #fff;
+}
+.buscador select { padding: 0 12px; border: 1px solid var(--borde); border-radius: var(--radio); background: #fff; }
+.buscador button {
+  padding: 14px 24px; font-size: 16px; font-weight: 600; cursor: pointer;
+  color: #fff; background: var(--acento); border: 0; border-radius: var(--radio);
+}
+.buscador button:hover { filter: brightness(1.07); }
+
+.ejemplos { margin-top: 16px; color: var(--tinta-suave); font-size: 14px; }
+.ejemplos a { color: var(--acento); cursor: pointer; text-decoration: none; }
+.ejemplos a:hover { text-decoration: underline; }
+
+.cabecera-resultados {
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 16px; margin: 10px 0 18px; flex-wrap: wrap;
+}
+.etq { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: var(--tinta-suave); }
+.cabecera-resultados h2 { margin: 4px 0 0; font-size: 26px; }
+.resumen { color: var(--tinta-suave); font-size: 14px; }
+
+.tarjeta {
+  background: var(--tarjeta); border: 1px solid var(--borde);
+  border-left: 6px solid var(--borde); border-radius: var(--radio);
+  padding: 18px 20px; margin-bottom: 14px;
+}
+.tarjeta.alto { border-left-color: var(--rojo); }
+.tarjeta.medio { border-left-color: var(--amarillo); }
+.tarjeta.bajo { border-left-color: var(--verde); }
+
+.fila-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.nombre-marca { font-size: 19px; font-weight: 700; }
+.meta-marca { color: var(--tinta-suave); font-size: 13px; margin-top: 2px; }
+
+.badge { font-size: 13px; font-weight: 700; padding: 6px 12px; border-radius: 999px; white-space: nowrap; }
+.badge.alto { color: var(--rojo); background: var(--rojo-bg); }
+.badge.medio { color: var(--amarillo); background: var(--amarillo-bg); }
+.badge.bajo { color: var(--verde); background: var(--verde-bg); }
+
+.barras { margin-top: 14px; display: grid; gap: 9px; }
+.barra-fila { display: grid; grid-template-columns: 120px 1fr 46px; align-items: center; gap: 10px; font-size: 13px; }
+.barra-etq { color: var(--tinta-suave); }
+.barra-track { background: #eef1f8; height: 9px; border-radius: 999px; overflow: hidden; }
+.barra-fill { height: 100%; border-radius: 999px; }
+.barra-fill.alto { background: var(--rojo); }
+.barra-fill.medio { background: var(--amarillo); }
+.barra-fill.bajo { background: var(--verde); }
+.barra-val { text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+
+.explica { margin-top: 12px; font-size: 13px; color: var(--tinta-suave); line-height: 1.5; }
+.explica b { color: var(--tinta); }
+.resaltado { background: #fff2b8; border-radius: 3px; padding: 0 1px; font-weight: 700; color: var(--tinta); }
+.motivo { display: inline-block; margin-top: 8px; font-size: 12px; color: var(--acento); }
+
+.vacio { text-align: center; color: var(--tinta-suave); padding: 30px; }
+footer { text-align: center; color: var(--tinta-suave); font-size: 12px; padding: 24px; }
+
+</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">LUMIRIA</div>
+    <div class="tagline">Análisis de confundibilidad marcaria · Ecuador</div>
+  </header>
+
+  <main>
+    <section class="hero" id="hero">
+      <h1>Ingresa el nombre de tu marca</h1>
+      <p class="sub" style="color:#4f46e5;font-weight:600">★ Vista previa offline — prueba: Synergy, Rey, Acuabrite, Luna</p>
+      <p class="sub">Evaluamos el riesgo de confusión frente a marcas registradas
+        en el SENADI según los criterios del Tribunal Andino (145-IP-2022).</p>
+      <form id="form-busqueda" class="buscador">
+        <input id="q" type="text" autocomplete="off" placeholder="Ej.: Synergy, Rey, Acuabrite…" />
+        <select id="clase" title="Clase de Niza">
+          <option value="todas">Todas las clases</option>
+        </select>
+        <button type="submit">Analizar</button>
+      </form>
+      <div class="ejemplos">
+        Prueba: <a data-q="Synergy">Synergy</a> · <a data-q="Rey">Rey</a> ·
+        <a data-q="Acuabrite">Acuabrite</a> · <a data-q="Luna">Luna</a> ·
+        <a data-q="Baca">Baca</a>
+      </div>
+    </section>
+
+    <section id="resultados" class="resultados oculto">
+      <div class="cabecera-resultados">
+        <div>
+          <span class="etq">Marca analizada</span>
+          <h2 id="marca-buscada">—</h2>
+        </div>
+        <div class="resumen" id="resumen-total"></div>
+      </div>
+      <div id="lista"></div>
+      <p id="vacio" class="vacio oculto">No se hallaron marcas con riesgo de confusión relevante. 🎉</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>Herramienta orientativa. No sustituye el dictamen de un examinador del
+       SENADI ni la asesoría legal profesional.</p>
+  </footer>
+
+  <script>
+// LUMIRIA · lógica del frontend (sin frameworks ni build).
+const API = ""; // mismo origen que sirve api.py
+
+const form = document.getElementById("form-busqueda");
+const inputQ = document.getElementById("q");
+const selClase = document.getElementById("clase");
+const $res = document.getElementById("resultados");
+const $lista = document.getElementById("lista");
+const $vacio = document.getElementById("vacio");
+const $marcaBuscada = document.getElementById("marca-buscada");
+const $resumen = document.getElementById("resumen-total");
+
+// Clases de Niza usadas en el dataset demo (en producción: catálogo completo 1-45).
+const CLASES = [3, 9, 11, 12, 16, 18, 24, 25, 28, 29, 30, 31, 32, 33, 35, 39, 41, 43, 44, 45];
+for (const c of CLASES) {
+  const o = document.createElement("option");
+  o.value = c; o.textContent = `Clase ${c}`;
+  selClase.appendChild(o);
+}
+
+document.querySelectorAll(".ejemplos a").forEach((a) =>
+  a.addEventListener("click", () => { inputQ.value = a.dataset.q; form.requestSubmit(); })
+);
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const q = inputQ.value.trim();
+  if (!q) return;
+  await buscar(q, selClase.value);
+});
+
+const DATOS = {"Synergy": {"consulta": "Synergy", "total": 2, "umbral": 40, "resultados": [{"motivo_inclusion": "riesgo_general", "marca": {"id": 2, "denominacion": "Xinergy", "clase_niza": 9, "titular": "TechXi Cía. Ltda.", "estado": "registrada", "numero_registro": "SENADI-2021-114"}, "puntaje_general": 58.9, "riesgo": {"nivel": "medio", "color": "amarillo", "mensaje": "Riesgo medio. Conviene un análisis legal detallado."}, "ortografica": {"puntaje": 64.7, "detalle": {"distancia_edicion": 2, "serie_vocalica_a": "e", "serie_vocalica_b": "ie", "silabas_a": ["synergy"], "silabas_b": ["xi", "nergy"], "letras_comunes_idx": [1, 2, 3, 4, 5]}}, "fonetica": {"puntaje": 87.5, "explicacion": "Sonido casi idéntico.", "factores": {"metaphone_a": "SINERGI", "metaphone_b": "KSINERGI", "soundex_a": "S867", "soundex_b": "K672", "tonica_a": "synergy", "tonica_b": "nergy", "tonica_coincide": false}}, "conceptual": {"puntaje": 5.0, "metodo": "lexicon", "explicacion": "Sin relación conceptual detectable."}}, {"motivo_inclusion": "riesgo_general", "marca": {"id": 1, "denominacion": "Sinergia", "clase_niza": 35, "titular": "Consultora Andina S.A.", "estado": "registrada", "numero_registro": "SENADI-2019-001"}, "puntaje_general": 46.9, "riesgo": {"nivel": "medio", "color": "amarillo", "mensaje": "Riesgo medio. Conviene un análisis legal detallado."}, "ortografica": {"puntaje": 44.8, "detalle": {"distancia_edicion": 3, "serie_vocalica_a": "e", "serie_vocalica_b": "ieia", "silabas_a": ["synergy"], "silabas_b": ["si", "ner", "gia"], "letras_comunes_idx": [0, 2, 3, 4, 5]}}, "fonetica": {"puntaje": 75.0, "explicacion": "Sonido marcadamente parecido.", "factores": {"metaphone_a": "SINERGI", "metaphone_b": "SINERJIA", "soundex_a": "S867", "soundex_b": "S672", "tonica_a": "synergy", "tonica_b": "ner", "tonica_coincide": false}}, "conceptual": {"puntaje": 5.0, "metodo": "lexicon", "explicacion": "Sin relación conceptual detectable."}}]}, "Rey": {"consulta": "Rey", "total": 3, "umbral": 40, "resultados": [{"motivo_inclusion": "riesgo_general", "marca": {"id": 4, "denominacion": "Rey Sol", "clase_niza": 30, "titular": "Alimentos Quito S.A.", "estado": "registrada", "numero_registro": "SENADI-2012-221"}, "puntaje_general": 61.8, "riesgo": {"nivel": "medio", "color": "amarillo", "mensaje": "Riesgo medio. Conviene un análisis legal detallado."}, "ortografica": {"puntaje": 55.0, "detalle": {"distancia_edicion": 3, "serie_vocalica_a": "e", "serie_vocalica_b": "eo", "silabas_a": ["rey"], "silabas_b": ["rey ", "sol"], "letras_comunes_idx": [0, 1, 2]}}, "fonetica": {"puntaje": 50.0, "explicacion": "Cierta semejanza de sonido.", "factores": {"metaphone_a": "REI", "metaphone_b": "REISOL", "soundex_a": "R800", "soundex_b": "R835", "tonica_a": "rey", "tonica_b": "sol", "tonica_coincide": false}}, "conceptual": {"puntaje": 90.0, "metodo": "lexicon", "explicacion": "Términos sinónimos: evocan la misma idea."}}, {"motivo_inclusion": "eje:conceptual", "marca": {"id": 23, "denominacion": "Monarca", "clase_niza": 24, "titular": "Hogar y Confort S.A.", "estado": "registrada", "numero_registro": "SENADI-2014-128"}, "puntaje_general": 31.7, "riesgo": {"nivel": "bajo", "color": "verde", "mensaje": "Bajo riesgo. Registro probablemente viable."}, "ortografica": {"puntaje": 10.0, "detalle": {"distancia_edicion": 6, "serie_vocalica_a": "e", "serie_vocalica_b": "oaa", "silabas_a": ["rey"], "silabas_b": ["mo", "nar", "ca"], "letras_comunes_idx": [0]}}, "fonetica": {"puntaje": 14.3, "explicacion": "Sonido diferente.", "factores": {"metaphone_a": "REI", "metaphone_b": "MONARKA", "soundex_a": "R800", "soundex_b": "M672", "tonica_a": "rey", "tonica_b": "nar", "tonica_coincide": false}}, "conceptual": {"puntaje": 90.0, "metodo": "lexicon", "explicacion": "Términos sinónimos: evocan la misma idea."}}, {"motivo_inclusion": "eje:conceptual", "marca": {"id": 3, "denominacion": "Corona", "clase_niza": 32, "titular": "Bebidas del Pacífico S.A.", "estado": "registrada", "numero_registro": "SENADI-2005-540"}, "puntaje_general": 27.0, "riesgo": {"nivel": "bajo", "color": "verde", "mensaje": "Bajo riesgo. Registro probablemente viable."}, "ortografica": {"puntaje": 11.7, "detalle": {"distancia_edicion": 5, "serie_vocalica_a": "e", "serie_vocalica_b": "ooa", "silabas_a": ["rey"], "silabas_b": ["co", "ro", "na"], "letras_comunes_idx": [0]}}, "fonetica": {"puntaje": 16.7, "explicacion": "Sonido diferente.", "factores": {"metaphone_a": "REI", "metaphone_b": "KORONA", "soundex_a": "R800", "soundex_b": "K760", "tonica_a": "rey", "tonica_b": "ro", "tonica_coincide": false}}, "conceptual": {"puntaje": 65.0, "metodo": "lexicon", "explicacion": "Mismo campo semántico (real…)."}}]}, "Acuabrite": {"consulta": "Acuabrite", "total": 5, "umbral": 40, "resultados": [{"motivo_inclusion": "riesgo_general", "marca": {"id": 7, "denominacion": "Acuafresh", "clase_niza": 3, "titular": "Higiene Oral Andes S.A.", "estado": "registrada", "numero_registro": "SENADI-2010-450"}, "puntaje_general": 70.4, "riesgo": {"nivel": "alto", "color": "rojo", "mensaje": "Alto riesgo de confundibilidad. Registro poco viable."}, "ortografica": {"puntaje": 58.4, "detalle": {"distancia_edicion": 4, "serie_vocalica_a": "auaie", "serie_vocalica_b": "auae", "silabas_a": ["a", "cua", "bri", "te"], "silabas_b": ["a", "cua", "fresh"], "letras_comunes_idx": [0, 1, 2, 3, 5, 8]}}, "fonetica": {"puntaje": 68.6, "explicacion": "Sonido marcadamente parecido. Misma estructura consonántica.", "factores": {"metaphone_a": "AKUABRITE", "metaphone_b": "AKUAFRES", "soundex_a": "A217", "soundex_b": "A217", "tonica_a": "bri", "tonica_b": "fresh", "tonica_coincide": false}}, "conceptual": {"puntaje": 90.0, "metodo": "lexicon", "explicacion": "Términos sinónimos: evocan la misma idea."}}, {"motivo_inclusion": "riesgo_general", "marca": {"id": 8, "denominacion": "Acuadent", "clase_niza": 3, "titular": "Dental Care Ecuador", "estado": "registrada", "numero_registro": "SENADI-2014-512"}, "puntaje_general": 66.3, "riesgo": {"nivel": "medio", "color": "amarillo", "mensaje": "Riesgo medio. Conviene un análisis legal detallado."}, "ortografica": {"puntaje": 58.2, "detalle": {"distancia_edicion": 4, "serie_vocalica_a": "auaie", "serie_vocalica_b": "auae", "silabas_a": ["a", "cua", "bri", "te"], "silabas_b": ["a", "cua", "dent"], "letras_comunes_idx": [0, 1, 2, 3, 7, 8]}}, "fonetica": {"puntaje": 58.6, "explicacion": "Cierta semejanza de sonido.", "factores": {"metaphone_a": "AKUABRITE", "metaphone_b": "AKUADENT", "soundex_a": "A217", "soundex_b": "A246", "tonica_a": "bri", "tonica_b": "dent", "tonica_coincide": false}}, "conceptual": {"puntaje": 90.0, "metodo": "lexicon", "explicacion": "Términos sinónimos: evocan la misma idea."}}, {"motivo_inclusion": "riesgo_general", "marca": {"id": 17, "denominacion": "Aqua Vida", "clase_niza": 32, "titular": "Aguas Cotopaxi S.A.", "estado": "registrada", "numero_registro": "SENADI-2020-066"}, "puntaje_general": 60.9, "riesgo": {"nivel": "medio", "color": "amarillo", "mensaje": "Riesgo medio. Conviene un análisis legal detallado."}, "ortografica": {"puntaje": 42.6, "detalle": {"distancia_edicion": 5, "serie_vocalica_a": "auaie", "serie_vocalica_b": "auaia", "silabas_a": ["a", "cua", "bri", "te"], "silabas_b": ["a", "qua ", "vi", "da"], "letras_comunes_idx": [0, 2, 3, 6]}}, "fonetica": {"puntaje": 58.6, "explicacion": "Cierta semejanza de sonido.", "factores": {"metaphone_a": "AKUABRITE", "metaphone_b": "AKABIDA", "soundex_a": "A217", "soundex_b": "A214", "tonica_a": "bri", "tonica_b": "vi", "tonica_coincide": false}}, "conceptual": {"puntaje": 90.0, "metodo": "lexicon", "explicacion": "Términos sinónimos: evocan la misma idea."}}, {"motivo_inclusion": "eje:conceptual", "marca": {"id": 9, "denominacion": "Solar", "clase_niza": 11, "titular": "Energías Renovables EC", "estado": "registrada", "numero_registro": "SENADI-2017-188"}, "puntaje_general": 31.2, "riesgo": {"nivel": "bajo", "color": "verde", "mensaje": "Bajo riesgo. Registro probablemente viable."}, "ortografica": {"puntaje": 17.4, "detalle": {"distancia_edicion": 7, "serie_vocalica_a": "auaie", "serie_vocalica_b": "oa", "silabas_a": ["a", "cua", "bri", "te"], "silabas_b": ["so", "lar"], "letras_comunes_idx": [0, 5]}}, "fonetica": {"puntaje": 22.2, "explicacion": "Sonido diferente.", "factores": {"metaphone_a": "AKUABRITE", "metaphone_b": "SOLAR", "soundex_a": "A217", "soundex_b": "S570", "tonica_a": "bri", "tonica_b": "lar", "tonica_coincide": false}}, "conceptual": {"puntaje": 65.0, "metodo": "lexicon", "explicacion": "Mismo campo semántico (aqua…)."}}, {"motivo_inclusion": "eje:conceptual", "marca": {"id": 15, "denominacion": "Estrella Polar", "clase_niza": 39, "titular": "Logística Galápagos S.A.", "estado": "registrada", "numero_registro": "SENADI-2015-321"}, "puntaje_general": 24.1, "riesgo": {"nivel": "bajo", "color": "verde", "mensaje": "Bajo riesgo. Registro probablemente viable."}, "ortografica": {"puntaje": 13.0, "detalle": {"distancia_edicion": 12, "serie_vocalica_a": "auaie", "serie_vocalica_b": "eeaoa", "silabas_a": ["a", "cua", "bri", "te"], "silabas_b": ["es", "tre", "lla ", "po", "lar"], "letras_comunes_idx": [0, 3, 5, 7, 8]}}, "fonetica": {"puntaje": 8.3, "explicacion": "Sonido diferente.", "factores": {"metaphone_a": "AKUABRITE", "metaphone_b": "ESTREYAPOLAR", "soundex_a": "A217", "soundex_b": "E347", "tonica_a": "bri", "tonica_b": "lar", "tonica_coincide": false}}, "conceptual": {"puntaje": 65.0, "metodo": "lexicon", "explicacion": "Mismo campo semántico (aqua…)."}}]}, "Luna": {"consulta": "Luna", "total": 2, "umbral": 40, "resultados": [{"motivo_inclusion": "riesgo_general", "marca": {"id": 6, "denominacion": "Luna Llena", "clase_niza": 43, "titular": "Restaurantes del Valle S.A.", "estado": "registrada", "numero_registro": "SENADI-2016-300"}, "puntaje_general": 61.6, "riesgo": {"nivel": "medio", "color": "amarillo", "mensaje": "Riesgo medio. Conviene un análisis legal detallado."}, "ortografica": {"puntaje": 54.7, "detalle": {"distancia_edicion": 5, "serie_vocalica_a": "ua", "serie_vocalica_b": "uaea", "silabas_a": ["lu", "na"], "silabas_b": ["lu", "na ", "lle", "na"], "letras_comunes_idx": [0, 1, 2, 3]}}, "fonetica": {"puntaje": 50.0, "explicacion": "Cierta semejanza de sonido.", "factores": {"metaphone_a": "LUNA", "metaphone_b": "LUNAYENA", "soundex_a": "L600", "soundex_b": "L656", "tonica_a": "lu", "tonica_b": "lle", "tonica_coincide": false}}, "conceptual": {"puntaje": 90.0, "metodo": "lexicon", "explicacion": "Términos sinónimos: evocan la misma idea."}}, {"motivo_inclusion": "riesgo_general", "marca": {"id": 5, "denominacion": "Selene", "clase_niza": 3, "titular": "Cosméticos Luna Cía. Ltda.", "estado": "registrada", "numero_registro": "SENADI-2018-077"}, "puntaje_general": 42.8, "riesgo": {"nivel": "bajo", "color": "verde", "mensaje": "Bajo riesgo. Registro probablemente viable."}, "ortografica": {"puntaje": 20.0, "detalle": {"distancia_edicion": 4, "serie_vocalica_a": "ua", "serie_vocalica_b": "eee", "silabas_a": ["lu", "na"], "silabas_b": ["se", "le", "ne"], "letras_comunes_idx": [0, 2]}}, "fonetica": {"puntaje": 33.3, "explicacion": "Sonido diferente.", "factores": {"metaphone_a": "LUNA", "metaphone_b": "SELENE", "soundex_a": "L600", "soundex_b": "S560", "tonica_a": "lu", "tonica_b": "le", "tonica_coincide": false}}, "conceptual": {"puntaje": 90.0, "metodo": "lexicon", "explicacion": "Términos sinónimos: evocan la misma idea."}}]}};
+
+async function buscar(q, clase) {
+  $marcaBuscada.textContent = q;
+  $res.classList.remove("oculto");
+  $lista.innerHTML = `<p class="vacio">Analizando…</p>`;
+  $vacio.classList.add("oculto");
+
+  // Modo demo offline: busca en los datos embebidos (insensible a mayúsculas).
+  const clave = Object.keys(DATOS).find(k => k.toLowerCase() === q.toLowerCase());
+  const data = clave ? DATOS[clave] : { total: 0, resultados: [] };
+
+  $resumen.textContent = `${data.total} coincidencia(s) sobre el umbral`;
+  $lista.innerHTML = "";
+  if (!data.resultados || data.resultados.length === 0) {
+    $vacio.classList.remove("oculto");
+    return;
+  }
+  data.resultados.forEach((r) => $lista.appendChild(tarjeta(q, r)));
+}
+
+function tarjeta(consulta, r) {
+  const nivel = r.riesgo.nivel; // alto | medio | bajo
+  const el = document.createElement("article");
+  el.className = `tarjeta ${nivel}`;
+
+  const m = r.marca;
+  el.innerHTML = `
+    <div class="fila-top">
+      <div>
+        <div class="nombre-marca">${resaltarComunes(m.denominacion, consulta)}</div>
+        <div class="meta-marca">Clase ${m.clase_niza ?? "—"} · ${m.titular ?? ""} · ${estado(m.estado)}</div>
+      </div>
+      <div style="text-align:right">
+        <div class="badge ${nivel}">Riesgo ${nivel} · ${r.puntaje_general}%</div>
+      </div>
+    </div>
+    <div class="barras">
+      ${barra("Ortográfica", r.ortografica.puntaje)}
+      ${barra("Fonética", r.fonetica.puntaje)}
+      ${barra("Conceptual", r.conceptual.puntaje)}
+    </div>
+    <div class="explica">
+      <div><b>Ortográfica:</b> ${detalleOrto(consulta, m.denominacion, r.ortografica)}</div>
+      <div><b>Fonética:</b> ${r.fonetica.explicacion}
+        <span style="opacity:.7">(${r.fonetica.factores.metaphone_a} ≈ ${r.fonetica.factores.metaphone_b})</span></div>
+      <div><b>Conceptual:</b> ${r.conceptual.explicacion}</div>
+      <span class="motivo">${motivo(r.motivo_inclusion)}</span>
+    </div>`;
+  return el;
+}
+
+function barra(etq, val) {
+  const nivel = val >= 70 ? "alto" : val >= 45 ? "medio" : "bajo";
+  return `<div class="barra-fila">
+    <span class="barra-etq">${etq}</span>
+    <span class="barra-track"><span class="barra-fill ${nivel}" style="width:${val}%"></span></span>
+    <span class="barra-val">${val}%</span>
+  </div>`;
+}
+
+function detalleOrto(a, b, orto) {
+  const d = orto.detalle || {};
+  const partes = [];
+  if (d.distancia_edicion != null) partes.push(`${d.distancia_edicion} edición(es) de diferencia`);
+  if (d.serie_vocalica_a && d.serie_vocalica_b)
+    partes.push(`vocales «${d.serie_vocalica_a}» vs «${d.serie_vocalica_b}»`);
+  return `${orto.puntaje}% — ${partes.join("; ")}.`;
+}
+
+// Resalta en `texto` las letras que comparte con `ref` (visualización simple).
+function resaltarComunes(texto, ref) {
+  const set = new Set(ref.toLowerCase().replace(/[^a-záéíóúñ]/gi, ""));
+  return [...texto].map((ch) =>
+    set.has(ch.toLowerCase()) ? `<span class="resaltado">${ch}</span>` : ch
+  ).join("");
+}
+
+function estado(e) {
+  return ({ registrada: "Registrada", en_tramite: "En trámite", rechazada: "Rechazada" }[e]) || e || "";
+}
+function motivo(m) {
+  if (!m) return "";
+  if (m === "riesgo_general") return "Incluida por riesgo general.";
+  return "Incluida por similitud " + m.replace("eje:", "").replace(/,/g, " y ") + ".";
+}
+
+</script>
+</body>
+</html>
