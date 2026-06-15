@@ -1,0 +1,16 @@
+# LUMIRIA — dependencias de PRODUCCIÓN.
+# El motor y la demo (api.py) funcionan SOLO con la biblioteca estándar.
+# Estas librerías habilitan la API FastAPI y el eje conceptual con embeddings.
+
+fastapi>=0.110
+uvicorn[standard]>=0.29
+
+# Eje conceptual (embeddings en español). Tras instalar:
+#   python -m spacy download es_core_news_md   (o es_core_news_lg)
+spacy>=3.7
+
+# Opcional: algoritmos de distancia/fonética en C (más rápidos).
+# jellyfish>=1.0
+
+# Conector PostgreSQL para la ingesta/consultas en producción.
+psycopg[binary]>=3.1

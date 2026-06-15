@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LUMIRIA · Búsqueda de anterioridades marcarias · Ecuador</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">LUMIRIA</div>
+    <div class="tagline">Análisis de confundibilidad marcaria · Ecuador</div>
+  </header>
+
+  <main>
+    <section class="hero" id="hero">
+      <h1>Ingresa el nombre de tu marca</h1>
+      <p class="sub">Evaluamos el riesgo de confusión frente a marcas registradas
+        en el SENADI según los criterios del Tribunal Andino (145-IP-2022).</p>
+      <form id="form-busqueda" class="buscador">
+        <input id="q" type="text" autocomplete="off" placeholder="Ej.: Synergy, Rey, Acuabrite…" />
+        <select id="clase" title="Clase de Niza">
+          <option value="todas">Todas las clases</option>
+        </select>
+        <button type="submit">Analizar</button>
+      </form>
+      <div class="ejemplos">
+        Prueba: <a data-q="Synergy">Synergy</a> · <a data-q="Rey">Rey</a> ·
+        <a data-q="Acuabrite">Acuabrite</a> · <a data-q="Luna">Luna</a> ·
+        <a data-q="Baca">Baca</a>
+      </div>
+    </section>
+
+    <section id="resultados" class="resultados oculto">
+      <div class="cabecera-resultados">
+        <div>
+          <span class="etq">Marca analizada</span>
+          <h2 id="marca-buscada">—</h2>
+        </div>
+        <div class="resumen" id="resumen-total"></div>
+      </div>
+      <div id="lista"></div>
+      <p id="vacio" class="vacio oculto">No se hallaron marcas con riesgo de confusión relevante. 🎉</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>Herramienta orientativa. No sustituye el dictamen de un examinador del
+       SENADI ni la asesoría legal profesional.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
